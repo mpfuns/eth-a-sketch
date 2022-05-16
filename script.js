@@ -7,16 +7,15 @@ let container = document.querySelector('#container');
 
 function gridAreaDiv(num, pre) {
 
-    // creates the divs 
-    for (let i =0; i < num; i++) {
-        let div = document.createElement("div");
-        div.className = "grid";
-        //removal of div
-        div.id="grid"+i;
-        div.textContent = 'grid' + i;
-        container.appendChild(div);
-
-    }
+    
+        for (let i =pre; i <num; i++) {
+            let div = document.createElement("div");
+            div.className = "grid";
+            //removal of div
+            div.id="grid"+i;
+            div.textContent = 'grid' + i;
+            container.appendChild(div);
+        }
     
 
     //this makes each  one have a hover effect
@@ -36,6 +35,7 @@ function gridAreaDiv(num, pre) {
 
 
 };
+
 function removeGrid(pre, second) {
     
 
@@ -45,27 +45,18 @@ function removeGrid(pre, second) {
 
 
         console.log("I'm outside of loop");
-        for (let i = 0; i < update; i++) {
+        for (let i = second; i >=update; i--) {
             console.log("I'm inside");
-            let removalGridArea= document.querySelector("#grid")
-            let subtract = removalGridArea[i];
-                container.removeChild(subtract);
+            let removalGridArea= document.querySelector("#grid" );
+            
+            container.removeChild(removalGridArea);
         }
 
     }
-    else if (pre > 0 && pre < second) {
-        let plus = second - pre;
-        gridAreaDiv(plus,pre);
-
-    }
-    else if (pre == 0) {
+    else {
         gridAreaDiv(second,pre);
     }
-
-    else {
-
-    };
-}
+};
 
 
 
