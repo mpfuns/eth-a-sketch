@@ -1,0 +1,16 @@
+#container{
+ display:grid;
+ height:100 vh;
+ 
+ grid-template-columns: repeat(16,1fr);
+ grid-template-rows: repeat(16,1fr);
+ grid-template-areas: "grid grid grid grid grid grid grid grid";
+ 
+}
+
+
+
+.grid{
+    border: 5px solid rgb(111, 195, 239);
+    padding: 32px;
+}
