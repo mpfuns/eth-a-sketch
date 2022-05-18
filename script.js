@@ -7,16 +7,13 @@ let container = document.querySelector('#container');
 
 function gridAreaDiv(num, pre) {
 
-    
-        for (let i =pre; i <num; i++) {
-            let div = document.createElement("div");
-            div.className = "grid";
-            //removal of div
-            div.id="grid"+i;
-            div.textContent = 'grid' + i;
-            container.appendChild(div);
-        }
-    
+    // crating the grid 
+    for (let i = pre; i < num; i++) {
+        let div = document.createElement("div");
+        div.className = "grid";
+        container.appendChild(div);
+    }
+
 
     //this makes each  one have a hover effect
     const total = document.querySelectorAll('.grid');
@@ -26,7 +23,7 @@ function gridAreaDiv(num, pre) {
             grid.style.backgroundColor = 'pink';
         };
         grid.onmouseout = function () {
-            grid.style.backgroundColor = 'white';
+            grid.style.backgroundColor = 'grey';
         }
 
     });
@@ -37,24 +34,35 @@ function gridAreaDiv(num, pre) {
 };
 
 function removeGrid(pre, second) {
-    
 
+    //statement is for removal 
     if (pre > 0 && pre > second) {
-        let rip = pre - second;
-        let update = pre - rip;
-
-
-        console.log("I'm outside of loop");
-        for (let i = second; i >=update; i--) {
-            console.log("I'm inside");
-            let removalGridArea= document.querySelector("#grid" );
-            
-            container.removeChild(removalGridArea);
+        for (let i = pre; i > second; i--) {
+            let removalGridArea = container.lastElementChild;
+            removalGridArea.remove();
         }
+        //reset color of div 
+        const total = document.querySelectorAll('.grid');
+
+        total.forEach((grid) => {
+            grid.style.backgroundColor = 'white';
+        });
 
     }
+    //add grid 
     else {
-        gridAreaDiv(second,pre);
+        gridAreaDiv(second, pre);
+            //reset color of div 
+        if( pre>0){
+        const total = document.querySelectorAll('.grid');
+
+        total.forEach((grid) => {
+            grid.style.backgroundColor = 'white';
+        });
+
+        } else{
+            return 
+        }
     }
 };
 
@@ -75,7 +83,14 @@ function anwser(side) {
 //input the sides 
 function clear2() {
     let need = prompt("what size would you like the grid to be by?");
-    anwser(need);
+    if (need > 100) {
+        alert("Max is 100 by 100,so please pick a different size.");
+        clear2();
+    }
+    else {
+        anwser(need);
+    }
+
 };
 
 
