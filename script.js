@@ -1,47 +1,40 @@
 
 let container = document.querySelector('#container');
 
-function randomColor() {
-    
-    
-    
-    // for hsl()
-    let hue= (Math.floor(360*(Math.random()))); 
-    let saturation=100;
-    let lightness= 50;
-    
-    let color= `hsl(${hue},${saturation}%,${lightness}%)`;
-
-    return color;
-    
- };
- function shading (){
-    let shade= document.querySelector('.grid');
+function shading (idColor){
     // get in r,g,b
-    let oldColor=shade.style.backgroundColor;
-    let rbgstring=oldColor.slice(4, -1);
-    let rgbArray=rbgstring.split(",");
+       ;
+       let oldColor=getComputedStyle(document.querySelector(`#${idColor}`), null).getPropertyValue("background-color");
+       
+     
+       let rbgstring=oldColor.slice(5, -1);
+       let rgbArray=rbgstring.split(",");
+      
+       let red=rgbArray[0];
+       let green=rgbArray[1];
+       let blue=rgbArray[2];
+       //hsl coverstion 
+       let oldhls= rgbToHsl(red,green,blue);
+       let hue= Math.floor(oldhls[0]);
+      
+       let sat= Math.floor(oldhls[1]);
+     
+       let lig =Math.floor(oldhls[2]);
+     
+       let darken= lig-5;
+       let newColor=`hsl(${hue},${sat}%,${darken}%)`;
+       
+       return newColor;
+   
     
-    let red=rgbArray[0];
-    let green=rgbArray[1];
-    let blue=rgbArray[2];
-    //hsl coverstion 
-    let oldhls= rgbToHsl(red,green,blue);
-    let hue= Math.floor(oldhls[0]);
-    let sat= Math.floor(oldhls[1]);
-    let lig =Math.floor(oldhls[2]);
-    let darken= lig-5;
-    let newColor=`hsl(${hue},${sat}%,${darken}%)`;
-    console.log(newColor);
-    return newColor;
 
 
-}
+};
 
 function rgbToHsl(r, g, b) {
-    r /= 255;
-    g /= 255;
-    b /= 255;
+   r /= 255;
+ g /= 255;
+ b /= 255;
  const l = Math.max(r, g, b);
  const s = l - Math.min(r, g, b);
  const h = s
@@ -56,68 +49,74 @@ function rgbToHsl(r, g, b) {
    100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0),
    (100 * (2 * l - s)) / 2,
  ];
- }
-
- /*
- function activateColor (){
-    let grids=document.querySelectorAll('.grid');
-    console.log(grids);
-    grids.forEach((grid)=>{
-        let color= grid.style.backgroundColor;
-        console.log(color);
-        switch (color){
-    
-            case('hsl(0, 0%, 100%)'): 
-                randomColor();
-                console.log(`I'm here in random`);
-            break;
-            
-            default:
-               shading();
-               console.log(`I'm here in shading`);
-        };})
-    
  };
- */
 
 
-function gridAreaDiv(num, pre) {
+ function randomColor() {
+   
+   
+   
+   // for hsl()
+   let hue= (Math.floor(360*(Math.random()))); 
+   let saturation=100;
+   let lightness= 65;
+   
+   let color= `hsl(${hue},${saturation}%,${lightness}%)`;
 
-    // crating the grid 
-    for (let i = pre; i < num; i++) {
-        let div = document.createElement("div");
-        div.className = "grid";
-        container.appendChild(div);
-    }
-
-
-    //this makes each  one have a hover effect
-    const total = document.querySelectorAll('.grid');
-
-    total.forEach((grid) => {
-         
-        grid.onmouseout = function () {
-            let color= grid.style.backgroundColor;
-            console.log(color);
-            switch (color){
-        
-                case('hsl(0, 0%, 100%)'): 
-                grid.style.backgroundColor= randomColor();
-                    console.log(`I'm here in random`);
-                break;
-                
-                default:
-                    grid.style.backgroundColor=shading();
-                   console.log(`I'm here in shading`);
-            };
-               
-        };
-    });
-
-
-
-
+   return color;
+   
 };
+
+
+
+
+
+ function gridAreaDiv(num, pre) {
+
+   // crating the grid 
+   for (let i = pre; i < num; i++) {
+       let div = document.createElement("div");
+       div.className = "grid";
+       div.id="grid"+i;
+       container.appendChild(div);
+   }
+
+
+   //this makes each  one have a hover effect
+   const total = document.querySelectorAll('.grid');
+   
+   total.forEach((grid) => {
+       grid.backgroundColor=`hsl(0, 0%, 100%)`;
+       
+       grid.onmouseout = function () {
+           let idGrid = grid.getAttribute('id');
+          
+           let color= getComputedStyle(document.querySelector(`#${idGrid}`), null).getPropertyValue("background-color");
+       
+           /* let color= getComputedStyle(document.querySelector(`.grid`), null).getPropertyValue("background-color");
+       console.log(color); */
+       
+       let regex = /rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/g;
+       let found= color.match(regex); 
+       
+       switch (color){
+   
+           case(`rgba(0, 0, 0, 0)`): 
+           grid.style.backgroundColor= randomColor();
+               
+           break;
+           
+           case(`${found}`):
+           grid.style.backgroundColor=shading(idGrid);
+           
+           break;
+           
+           default:
+               console.log(` this didn't work `);
+       };  
+       };
+   });
+ }
 
 function removeGrid(pre, second) {
 

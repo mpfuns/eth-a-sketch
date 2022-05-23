@@ -13,7 +13,7 @@
 .grid{
     border: 2px solid rgb(0, 0, 0);
     padding: 36px;
-    background-color: hsl(0, 0%, 100%);
+    
 }
 .grid:hover{
     border:2px solid hsl(334, 89%, 75%);
