@@ -14,14 +14,15 @@ function shading (idColor){
        let green=rgbArray[1];
        let blue=rgbArray[2];
        //hsl coverstion 
-       let oldhls= rgbToHsl(red,green,blue);
-       let hue= Math.floor(oldhls[0]);
+       let oldhls= rgbToHsl(red, green, blue);
+       
+       let hue= oldhls[0];
       
-       let sat= Math.floor(oldhls[1]);
+       let sat= oldhls[1];
      
-       let lig =Math.floor(oldhls[2]);
+       let lig =oldhls[2];
      
-       let darken= lig-5;
+        let darken= lig-5;
        let newColor=`hsl(${hue},${sat}%,${darken}%)`;
        
        return newColor;
@@ -45,7 +46,7 @@ function rgbToHsl(r, g, b) {
      : 4 + (r - g) / s
    : 0;
  return [
-   60 * h < 0 ? 60 * h + 360 : 60 * h,
+   60 * h < 0 ? 60* h + 360 : 60 * h,
    100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0),
    (100 * (2 * l - s)) / 2,
  ];
@@ -59,7 +60,7 @@ function rgbToHsl(r, g, b) {
    // for hsl()
    let hue= (Math.floor(360*(Math.random()))); 
    let saturation=100;
-   let lightness= 65;
+   let lightness= 50;
    
    let color= `hsl(${hue},${saturation}%,${lightness}%)`;
 
@@ -90,11 +91,10 @@ function rgbToHsl(r, g, b) {
        
        grid.onmouseout = function () {
            let idGrid = grid.getAttribute('id');
-          
+         
            let color= getComputedStyle(document.querySelector(`#${idGrid}`), null).getPropertyValue("background-color");
-       
-           /* let color= getComputedStyle(document.querySelector(`.grid`), null).getPropertyValue("background-color");
-       console.log(color); */
+        
+           
        
        let regex = /rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/g;
        let found= color.match(regex); 
@@ -130,7 +130,7 @@ function removeGrid(pre, second) {
         const total = document.querySelectorAll('.grid');
 
         total.forEach((grid) => {
-            grid.style.backgroundColor = 'hsl(0, 0%, 100%)';
+            grid.style.backgroundColor = 'rgba(0, 0, 0, 0)';
         });
 
     }
@@ -142,7 +142,7 @@ function removeGrid(pre, second) {
         const total = document.querySelectorAll('.grid');
 
         total.forEach((grid) => {
-            grid.style.backgroundColor = 'hsl(0, 0%, 100%)';
+            grid.style.backgroundColor = 'rgba(0, 0, 0, 0)';
         });
 
         } else{
